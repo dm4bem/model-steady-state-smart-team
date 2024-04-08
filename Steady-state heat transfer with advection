@@ -19,8 +19,21 @@ cpair=
 ACH=
 
 ///Elements of the figure///
+# Gout represents the conductance between the outdoor and the rooms #
+# Gout1 is for the frist questions (without the t=solar radiation, Gout2 is with the solar radiation #
+Goutv=
+Goutd=
+Gout1= Goutv + Goutd
+Gout2= 2*Gout + Goutd
 
-Gout=
-Gin=
+# Gin4 represents the conductance between the rooms 1,2,3 and the room 4 #
+Gin4v=
+Gin4d=
+Gin4 = 2*Gin4v + Gin4d
+
+# Gin represents the conductance between the rooms 1,2 and 3 #
+Ginv=
+Gind=
+Gin = 2*Ginv + Gind
 
 ///Calculations///
