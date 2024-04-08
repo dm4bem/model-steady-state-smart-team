@@ -36,4 +36,8 @@ Ginv=
 Gind=
 Gin = 2*Ginv + Gind
 
+
 ///Calculations///
+
+# Temperature source vector #
+b = np.array([T0, T0, 0, 0, 0, 0 ,0])
