@@ -23,11 +23,7 @@ Gout13=1/(1/(ho*(Sl+SL))+1/(hi*(Sl+SL)+lamda*(SL+Sl)/w)
 
 ///Elements of the figure///
 # Gout represents the conductance between the outdoor and the rooms #
-# Gout1 is for the first questions (without the t=solar radiation, Gout2 is with the solar radiation #
-Goutv=
-Goutd=
-Gout1= Goutv + Goutd
-Gout2= 2*Gout + Goutd
+# This is ONLY for the first question (without solar radiation) #
 
 Gout13=1/(1/(ho*(Sl+SL))+1/(hi*(Sl+SL)+lamda*(SL+Sl)/w)
 Gout2=1/(1/(ho*SL)+1/(hi*SL)+lamda*SL/w)
@@ -39,6 +35,6 @@ Gin4d=lamda*SL/w
 Gin4 = 1/(2/Gin4v + 1/Gin4d)
 
 # Gin represents the conductance between the rooms 1,2 and 3 #
-Ginv=
-Gind=
-Gin = 2*Ginv + Gind
+Ginv=hi*Sl
+Gind=lamda*Sl/w
+Gin = 1/(2/Ginv + 1/Gind)
