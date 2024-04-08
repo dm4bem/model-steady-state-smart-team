@@ -39,5 +39,10 @@ Gin = 2*Ginv + Gind
 
 ///Calculations///
 
+A = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1],[-1,1,0,0],[0,-1,1,0],[-1,0,0,1],[0,-1,0,1],[0,0,-1,1]])
+
 # Temperature source vector #
 b = np.array([T0, T0, 0, 0, 0, 0 ,0])
+
+# Flow-rate #
+f = np.array[(
