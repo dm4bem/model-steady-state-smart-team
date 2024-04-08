@@ -49,7 +49,10 @@ f = np.array([[E*(L+l),0,E*(L+l),0]])
 # Capactity matrix #
 C = np.zeros((9,4))
 
-
-
 # Output #
 y=np.array([[1,1,1,1]])
+
+theta = np.linalg.inv(A.T @ G @ A) @ (A.T @ G @ b + f)
+q = G@(-A @ theta + b)
+print('theta = ', theta)
+print('q = ',q)
