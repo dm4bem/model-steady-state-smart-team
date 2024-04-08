@@ -36,9 +36,8 @@ Ginv=
 Gind=
 Gin = 2*Ginv + Gind
 
-
 ///Calculations///
-
+# Incidence matrix #
 A = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1],[-1,1,0,0],[0,-1,1,0],[-1,0,0,1],[0,-1,0,1],[0,0,-1,1]])
 
 # Temperature source vector #
@@ -47,6 +46,10 @@ b = np.array([T0, T0, 0, 0, 0, 0 ,0])
 # Flow-rate source vector (for the question 2 only) #
 f = np.array([[E*(L+l),0,E*(L+l),0]])
 
-#
-y=np.array([
-Cap
+# Capactity matrix #
+C = np.zeros((9,4))
+
+
+
+# Output #
+y=np.array([[1,1,1,1]])
