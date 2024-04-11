@@ -1,15 +1,16 @@
 import numpy as np
 
 ///Data///
-w= #width of the walls#
+w=0.5 #width of the walls#
 T0= #temperature outdoor#
 T1c= #temperature controlled in the room 1#
 T2c= #temperature controlled in the room 2#
 T3c= #temperature controlled in the room 3#
-T4c= #temperature controlled in the room 4#
-L= 
-l=
-H= #height#
+L1= 20
+L2=10
+L3=6
+L4=8
+H=3 #height#
 lamda= #thermal conductivity of the wall#
 E= #solar radiation#
 ho= #heat convection coefficient (outdoor)#
@@ -17,6 +18,14 @@ hi= #heat convection coefficient (indoor)#
 roair=
 cpair=
 ACH=
+
+#Surface#
+
+
+
+
+
+
 
 ///Elements of the figure///
 # Gout represents the conductance between the outdoor and the rooms #
