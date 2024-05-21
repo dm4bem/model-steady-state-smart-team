@@ -159,5 +159,5 @@ f[19]= Qin
 
 ### Calcul ###
 theta = np.linalg.inv(A.T @ np.diag(G) @ A) @ (A.T @ np.diag(G) @ b + f)
-q = np.diag(G) @ (-A @ θ + b)
+q = np.diag(G) @ (-A @ theta + b)
 print('pièce 0 : ', theta[0], ', pièce 1 : ',theta[1],', pièce 2 : ', theta[2])
