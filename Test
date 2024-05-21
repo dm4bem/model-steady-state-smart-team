@@ -1,7 +1,0 @@
-material = [conductivity ; specific heat ; density, width ; mesh]
-
-concrete = [1.4 ; 880 ; 2300 ; 0.2]
-insulation = [0.027 ; 1210 ; 55 ; 0.08]
-glasses = [1.4 ; 750 ; 2500 ; 0.004]
-
-
