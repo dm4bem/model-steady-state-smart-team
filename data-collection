@@ -111,8 +111,10 @@ ref_rad = (dir_h_rad + weather_data["dif_h_rad"]) * albedo * (1 - np.cos(β) / 2
 
 #Plot
 fig, ax = plt.subplots()
-ax.plot(weather_data.index,dir_rad,'Direct radiation')
-ax.plot(weather_data.index,dif_rad,'Diffuse radiation')
-ax.plot(weather_data.index,ref_rad,'Reflected radiation')
+ax.plot(weather_data.index,dir_rad,"g")
+ax.plot(weather_data.index,dif_rad,"y")
+ax.plot(weather_data.index,ref_rad,"b")
+plt.xlabel('Time')
+plt.legend()
 plt.show()
 #%%
