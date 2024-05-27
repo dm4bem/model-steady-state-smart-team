@@ -9,6 +9,9 @@ C[21]=C_thermal['mur intérieur horizontal']
 C[29]=C_thermal['mur bas béton']
 C[27]=C_thermal['mur bas isolant']
 
+T0 = 15
+Tisp = 19
+
 # # State-space
 # temperature nodes
 theta_list=[f"theta_{i}" for i in range(ntheta)]
@@ -55,15 +58,15 @@ print(f'uss = {uss}')
 time = pd.date_range(start="2000-01-01 00:00:00",
                            periods=n, freq=f"{int(dt)}S")
 
-To = 15 * np.ones(n)        # outdoor temperature
-Ti_sp = 19 * np.ones(n)     # indoor temperature set point
+To = T0 * np.ones(n)        # outdoor temperature
+Ti_sp = Ti_sp * np.ones(n)     # indoor temperature set point
 f0 = Qa * np.ones(n)       # auxiliary heat gains
 f3 = Qout * np.ones(n)      # solar radiation absorbed by the outdoor part of the glasses and the walls
 f7 = Qin * np.ones(n)       # solar radiation absorbed by the outdoor part of the glasses and the walls
-f3 = f8 = f10 = 
+f8 = f10 = f16 = f30 = f32 = f3
+f14 = f17 = f19 = f20 = f22 = f23 = f25 = f26 = f7
 
-
-data = {'To': To, 'Ti_sp': Ti_sp, 'Φo': Φo, 'Φi': Φi, 'Qa': Qa, 'Φa': Φa}
+data = {'To': T0, 'Ti_sp': Ti_sp, 'f0': f0, 'f3': f3, 'f7': f7, 'f8': f8, 'f10': f10, 'f14': f14, 'f16': f16, 'f17': f17, 'f19': f19, 'f20': f20, 'f22': f22, 'f23': f23, 'f25': f25, 'f26': f26, 'f30': f30, 'f32': f32}
 input_data_set = pd.DataFrame(data, index=time)
 
 # inputs in time from input_data_set
