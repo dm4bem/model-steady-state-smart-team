@@ -1,7 +1,7 @@
 
 
 bT = np.array([To, To, To, To, To, To, Tisp])     # vector of the nonzero elements of vector b : temperatures for the conductances 0, 1, 7, 35, 37, 39 and 40.
-fQ = np.array([Qout, Qin, Qout, Qout, Qin, Qout, Qin, Qin, Qin, Qin, Qin, Qin, Qin, Qout, Qout, Qa])         # vector of nonzero elements of vector f : [f3, f7, f8, f10, f14, f16, f17, f19, f20, f22, f23, f25, f26, f30, f32] 
+fQ = np.array([Qa, Qout, Qin, Qout, Qout, Qin, Qout, Qin, Qin, Qin, Qin, Qin, Qin, Qin, Qout, Qout])         # vector of nonzero elements of vector f : [f0, f3, f7, f8, f10, f14, f16, f17, f19, f20, f22, f23, f25, f26, f30, f32] 
 uss = np.hstack([bT, fQ])           # input vector for state space
 print(f'uss = {uss}')
 
@@ -16,9 +16,10 @@ time = pd.date_range(start="2000-01-01 00:00:00",
 
 To = 15 * np.ones(n)        # outdoor temperature
 Ti_sp = 19 * np.ones(n)     # indoor temperature set point
+f0 = Qa * np.ones(n)       # auxiliary heat gains
 f3 = Qout * np.ones(n)      # solar radiation absorbed by the outdoor part of the glasses and the walls
 f7 = Qin * np.ones(n)       # solar radiation absorbed by the outdoor part of the glasses and the walls
-f33 = Qa * np.ones(n)       # auxiliary heat gains
+f3 = f8 = f10 = 
 
 
 data = {'To': To, 'Ti_sp': Ti_sp, 'Φo': Φo, 'Φi': Φi, 'Qa': Qa, 'Φa': Φa}
