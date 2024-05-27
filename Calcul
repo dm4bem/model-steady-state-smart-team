@@ -215,6 +215,15 @@ C_thermal = {'vitre':C_layer[2]*Svitre,
         'mur intérieur vertical':Smur4*C_layer[0]
 }
 
+Va1 = (L1-wall_width_exterior)*(L2-wall_width_exterior)*H    # m³, volume d'air de la pièce du haut
+Va2 = (2*L1-wall_width_exterior)*(L2-wall_width_exterior)*H           # m³, volume d'air de la pièce du haut
+ACH1 = 1        # 1/h, changement d'air pièce du bas
+ACH2 = 0.5      # 1/h, changement d'air pièce du haut
+G_adv = {   'Advection bas': air['Density']*air['Specific heat']*ACH1*Va1/3600,
+            'Advection haut': air['Density']*air['Specific heat']*ACH2*Va2/3600,
+            'Advection entre haut':10
+}
+pd.DataFrame.from_dict({'Conduction':G_adv})
 
 G = np.zeros(A.shape[0])
 
