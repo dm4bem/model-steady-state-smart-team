@@ -40,7 +40,18 @@ print(f'uss = {uss}')
 # Create input_data_set
 # ---------------------
 # time vector
+Qa=0
+Φo=0
+Φi=0
+Φa=0
+t_settle = 4 * max(-1 / lamba)
+duration = np.ceil(t_settle / 3600) * 3600
 n = int(np.floor(duration / dt))    # number of time steps
+Tisp=20*np.ones(n)
+bT = np.array([T0, T0, T0, T0, T0, T0, Tisp])     # vector of the nonzero elements of vector b : temperatures for the conductances 0, 1, 7, 35, 37, 39 and 40.
+fQ = np.array([Qa, Qout, Qin, Qout, Qout, Qin, Qout, Qin, Qin, Qin, Qin, Qin, Qin, Qin, Qout, Qout])         # vector of nonzero elements of vector f : [f0, f3, f7, f8, f10, f14, f16, f17, f19, f20, f22, f23, f25, f26, f30, f32] 
+uss = np.hstack([bT, fQ])           # input vector for state space
+print(f'uss = {uss}')
 
 # DateTimeIndex starting at "00:00:00" with a time step of dt
 time = pd.date_range(start="2000-01-01 00:00:00",
