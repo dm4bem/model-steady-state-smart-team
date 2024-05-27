@@ -301,6 +301,12 @@ f[26]= Qin
 f[30]= Qout
 f[32]= Qout
 
+
+bT = np.array([To, To, To, To, To, To, Tisp])     # vector of the nonzero elements of vector b : temperatures for the conductances 0, 1, 7, 35, 37, 39 and 40.
+fQ = np.array([Qout, Qin, Qout, Qout, Qin, Qout, Qin, Qin, Qin, Qin, Qin, Qin, Qin, Qout, Qout])         # vector of nonzero elements of vector f : [f3, f7, f8, f10, f14, f16, f17, f19, f20, f22, f23, f25, f26, f30, f32] 
+uss = np.hstack([bT, fQ])           # input vector for state space
+print(f'uss = {uss}')
+
 ### Calcul  steady-state###
 #theta = np.linalg.inv(A.T @ np.diag(G) @ A) @ (A.T @ np.diag(G) @ b + f)
 #q = np.diag(G) @ (-A @ theta + b)
