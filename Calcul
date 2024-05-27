@@ -11,9 +11,11 @@ import dm4bem
 ###Data###
 
 h = 3               # m hauteur des murs
+hporte = 2,04       # m hauteur de la porte d'entrée
 L1= 10              # m longueur premier côté
 L2= 8               # m longueur deuxième  côté
 L3= 6               # m longueur coté du fond
+Lporte = 
 S1 = L1*h           # m² surface 1 intermédiaire
 S2 = L2*h           # m² surface 2 intermédiaire
 S3 = L3*h           # m² surface 3 intermédiaire
@@ -22,6 +24,8 @@ Svitre = 4          # m² surface d'une vitre
 Smur2= S1+S2 -Svitre        # m² surface d'un des murs du haut
 Smur3= S1             # m² surface du mur intérieur horizontale
 Smur4= S2             # m² surface du mur intérieur verticale
+Sporte= 2,04
+lambdabois = 0,15 W/(mK)
 
 T0 = 10 #température extérieure
 Tin = 20 #température intérieure au début
@@ -29,6 +33,7 @@ ntheta= 33  #nombre de points de température
 nbranches= 43 #nombre de branches
 Qout = 5 #heat flow rate outside#
 Qin = 2 #heat flow rate inside#
+Qa = 1 #heat flow rate for auxiliaries heat gains#
 
 ####
 air = {'Density': 1.2,                      # kg/m³
@@ -64,13 +69,14 @@ layer = pd.DataFrame.from_dict({'Layer_out': concrete,
 h = pd.DataFrame([{'in': 8., 'out': 25}], index=['h'])  # W/(m²⋅K)
 layer
 
+
 ### Incidence matrix###
 
 A = np.zeros([nbranches, ntheta])
 
 A[6,0] = 1
 A[13,0] = 1
-A[18,0]=1
+A[18,0]= 1
 A[20,0] = -1
 A[24,0] = -1
 A[41,0] = -1
@@ -200,7 +206,8 @@ G_conv={'vitre interieur':h[0]*Svitre,
         'mur haut interieur':Smur2*h[1],
         'mur haut exterieur':Smur2*h[0],
         'mur intérieur horizontal':Smur3*h[0],
-        'mur intérieur vertical':Smur4*h[0]
+        'mur intérieur vertical':Smur4*h[0],
+        'porte d'entrée' : lambdabois*Sporte/eporte
 }
 pd.DataFrame.from_dict({'Conduction':G_conv})
 
@@ -263,7 +270,7 @@ G[32]=G_cd['mur bas isolant']
 G[33]=G_cd['mur bas béton']
 G[34]=G_cd['mur bas béton']
 G[35]=G_conv['mur bas exterieur']
-G[36]=G_adv['Advection bas']
+G[36]=G_conv['porte d'entrée']
 G[37]=1 #Conv ext porte
 G[38]=1 #Conv int porte
 G[39]=1 #Ventilation
@@ -285,6 +292,7 @@ b[39]=T0
 
 f = np.zeros(A.shape[1])
 
+f[0]= Qa
 f[3]= Qout
 f[7]= Qin
 f[8]= Qout
