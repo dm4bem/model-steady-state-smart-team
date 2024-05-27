@@ -10,18 +10,22 @@ import matplotlib.pyplot as plt
 import dm4bem
 ###Data###
 
-H = 3               # m hauteur des murs
+h = 3               # m hauteur des murs
+hporte = 2,04       # m hauteur de la porte d'entrée
 L1= 10              # m longueur premier côté
 L2= 8               # m longueur deuxième  côté
 L3= 6               # m longueur coté du fond
-S1 = L1*H           # m² surface 1 intermédiaire
-S2 = L2*H           # m² surface 2 intermédiaire
-S3 = L3*H           # m² surface 3 intermédiaire
+Lporte = 0,73       # m largeur de la porte d'entrée
+S1 = L1*h           # m² surface 1 intermédiaire
+S2 = L2*h           # m² surface 2 intermédiaire
+S3 = L3*h           # m² surface 3 intermédiaire
 Smur1 = 2*S1+2*S3   # m² surface du mur du bas
 Svitre = 4          # m² surface d'une vitre
 Smur2= S1+S2 -Svitre        # m² surface d'un des murs du haut
 Smur3= S1             # m² surface du mur intérieur horizontale
 Smur4= S2             # m² surface du mur intérieur verticale
+Sporte= Sporte * Lporte    # m² surface de la porte d'entrée
+eporte= 0,035         # m épaisseur de la porte d'entrée
 
 T0 = 20 #température extérieure
 Tin = 0 #température intérieure au début
@@ -62,6 +66,7 @@ layer = pd.DataFrame.from_dict({'Layer_out': concrete,
 
 σ = 5.67e-8     # W/(m²⋅K⁴) Stefan-Bolzmann constant
 h = pd.DataFrame([{'in': 8., 'out': 25}], index=['h'])  # W/(m²⋅K)
+lambdabois = 0,15     # wood thermic conductivity W/(mK)
 wall_width_interior=insulation['Width']
 wall_width_exterior=insulation['Width']+concrete['Width']
 
@@ -190,7 +195,8 @@ G_cd={'vitre':G_layer[2]*Svitre,
         'mur haut isolant':Smur2*G_layer[1],
         'mur haut béton':Smur2*G_layer[0],
         'mur intérieur horizontal':Smur3*G_layer[0],
-        'mur intérieur vertical':Smur4*G_layer[0]
+        'mur intérieur vertical':Smur4*G_layer[0],
+        'porte d'entrée' : h[2]*Sporte/eporte
 }
 pd.DataFrame.from_dict({'Conduction':G_cd})
 
@@ -201,7 +207,9 @@ G_conv={'vitre interieur':h['in']*Svitre,
         'mur haut interieur':Smur2*h['out'],
         'mur haut exterieur':Smur2*h['in'],
         'mur intérieur horizontal':Smur3*h['in'],
-        'mur intérieur vertical':Smur4*h['in']
+        'mur intérieur vertical':Smur4*h['in'],
+        'porte d'entrée intérieur' : Sporte * h[0],
+        'porte d'entrée exterieur' : Sporte * h[1]
 }
 pd.DataFrame.from_dict({'Conduction':G_conv})
 
