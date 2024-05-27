@@ -1,4 +1,13 @@
-
+C = np.zeros(A.shape[1])
+C[4]=C_thermal['mur haut béton']
+C[6]=C_thermal['mur haut isolant']
+C[11]=C_thermal['mur haut béton']
+C[13]=C_thermal['mur haut isolant']
+C[18]=C_thermal['mur intérieur vertical']
+C[24]=C_thermal['mur intérieur horizontal']
+C[21]=C_thermal['mur intérieur horizontal']
+C[29]=C_thermal['mur bas béton']
+C[27]=C_thermal['mur bas isolant']
 
 bT = np.array([To, To, To, To, To, To, Tisp])     # vector of the nonzero elements of vector b : temperatures for the conductances 0, 1, 7, 35, 37, 39 and 40.
 fQ = np.array([Qa, Qout, Qin, Qout, Qout, Qin, Qout, Qin, Qin, Qin, Qin, Qin, Qin, Qin, Qout, Qout])         # vector of nonzero elements of vector f : [f0, f3, f7, f8, f10, f14, f16, f17, f19, f20, f22, f23, f25, f26, f30, f32] 
