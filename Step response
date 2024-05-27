@@ -9,9 +9,27 @@ C[21]=C_thermal['mur intérieur horizontal']
 C[29]=C_thermal['mur bas béton']
 C[27]=C_thermal['mur bas isolant']
 
+# # State-space
+# temperature nodes
+theta = ['theta0', 'theta1', 'theta2', 'theta3', 'theta4', 'theta5', 'theta6', 'theta7','theta0', 'theta1', 'theta2', 'theta3', 'theta4', 'theta5', 'theta6', 'theta7']
 
-lamda = np.linalg.eig(As)[0]
-dtmax = 2*min(-1/lamda)
+theta_list=[f"theta_{i}" for i in range(ntheta)]
+q_list=[f"q_{i}" for i in range(nbranches)]
+# flow-rate branches
+
+#print(help(dm4bem.tc2ss))
+Adf = pd.DataFrame(A, index=q_list, columns=theta_list)
+Cdf= pd.Series(C, index=theta_list)
+Gdf = pd.Series(G, index=q_list)
+bdf = pd.Series(b, index=q_list)
+fdf = pd.Series(f, index=theta_list)
+ydf= pd.Series(y, index=theta_list)
+
+TC = {'A':Adf, 'C':Cdf, 'G':Gdf, 'b':bdf, 'f':fdf, 'y':ydf}
+[As, Bs, Cs, Ds, us] = dm4bem.tc2ss(TC)
+
+lamba= np.linalg.eig(As)[0]
+dtmax = 2*min(-1/lamba)
 dt = dm4bem.round_time(dtmax)
 
 bT = np.array([To, To, To, To, To, To, Tisp])     # vector of the nonzero elements of vector b : temperatures for the conductances 0, 1, 7, 35, 37, 39 and 40.
