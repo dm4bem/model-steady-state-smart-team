@@ -248,6 +248,19 @@ G[26]=G_cd['mur intérieur horizontal']
 G[27]=G_adv['Advection haut']
 G[28]=G_conv['mur intérieur horizontal']
 G[29]=G_conv['mur intérieur horizontal']
+G[30]=G_conv['mur bas intérieur']
+G[31]=G_cd['mur bas isolant']
+G[32]=G_cd['mur bas isolant']
+G[33]=G_cd['mur bas béton']
+G[34]=G_cd['mur bas béton']
+G[35]=G_conv['mur bas exterieur']
+G[36]=G_adv['Advection bas']
+G[37]=1 #Conv ext porte
+G[38]=1 #Conv int porte
+G[39]=1 #Ventilation
+G[40]=G_conv['vitre exterieur']
+G[41]=G_conv['vitre interieur']
+G[42]=G_conv['vitre interieur']
 
 ### Vector of temperature sources ###
 
