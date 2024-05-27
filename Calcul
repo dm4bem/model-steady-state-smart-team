@@ -15,7 +15,7 @@ hporte = 2,04       # m hauteur de la porte d'entrée
 L1= 10              # m longueur premier côté
 L2= 8               # m longueur deuxième  côté
 L3= 6               # m longueur coté du fond
-Lporte = 
+Lporte = 0,73       # m largeur de la porte d'entrée
 S1 = L1*h           # m² surface 1 intermédiaire
 S2 = L2*h           # m² surface 2 intermédiaire
 S3 = L3*h           # m² surface 3 intermédiaire
@@ -24,8 +24,7 @@ Svitre = 4          # m² surface d'une vitre
 Smur2= S1+S2 -Svitre        # m² surface d'un des murs du haut
 Smur3= S1             # m² surface du mur intérieur horizontale
 Smur4= S2             # m² surface du mur intérieur verticale
-Sporte= 2,04
-lambdabois = 0,15 W/(mK)
+Sporte= Sporte * Lporte    # m² surface de la porte d'entrée
 
 T0 = 10 #température extérieure
 Tin = 20 #température intérieure au début
@@ -66,8 +65,8 @@ layer = pd.DataFrame.from_dict({'Layer_out': concrete,
 τ_gSW = 0.30    # short wave transmitance: reflective blue glass
 
 σ = 5.67e-8     # W/(m²⋅K⁴) Stefan-Bolzmann constant
-h = pd.DataFrame([{'in': 8., 'out': 25}], index=['h'])  # W/(m²⋅K)
-layer
+h = pd.DataFrame([{'in': 8., 'out': 25}], index=['h'])  # W/(m²⋅K) layer
+lambdabois = 0,15     # wood thermic conductivity W/(mK)
 
 
 ### Incidence matrix###
@@ -195,7 +194,8 @@ G_cd={'vitre':G_layer[2]*Svitre,
         'mur haut isolant':Smur2*G_layer[1],
         'mur haut béton':Smur2*G_layer[0],
         'mur intérieur horizontal':Smur3*G_layer[0],
-        'mur intérieur vertical':Smur4*G_layer[0]
+        'mur intérieur vertical':Smur4*G_layer[0],
+        'porte d'entrée' : h[2]*Sporte/eporte,
 }
 pd.DataFrame.from_dict({'Conduction':G_cd})
 
@@ -207,7 +207,6 @@ G_conv={'vitre interieur':h[0]*Svitre,
         'mur haut exterieur':Smur2*h[0],
         'mur intérieur horizontal':Smur3*h[0],
         'mur intérieur vertical':Smur4*h[0],
-        'porte d'entrée' : lambdabois*Sporte/eporte
 }
 pd.DataFrame.from_dict({'Conduction':G_conv})
 
