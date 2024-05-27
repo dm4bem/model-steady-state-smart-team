@@ -27,8 +27,8 @@ T0 = 20 #température extérieure
 Tin = 0 #température intérieure au début
 ntheta= 33  #nombre de points de température
 nbranches= 43 #nombre de branches
-Qout = 5 #heat flow rate outside#
-Qin = 2 #heat flow rate inside#
+Qout = 50 #heat flow rate outside#
+Qin = 50 #heat flow rate inside#
 
 ####
 air = {'Density': 1.2,                      # kg/m³
@@ -87,7 +87,7 @@ A[28,2] = 1
 A[24,2] = 1
 A[29,2]=1
 A[27,2] = 1
-A[39,2] = -1
+A[39,2] = 1
 A[38,2] = 1
 A[30,2] = 1
 
@@ -230,43 +230,43 @@ G = np.zeros(A.shape[0])
 
 G[0]=G_conv['vitre exterieur']
 G[1]=G_conv['mur haut exterieur']
-G[2]=G_cd['mur haut béton']
-G[3]=G_cd['mur haut béton']
-G[4]=G_cd['mur haut isolant']
-G[5]=G_cd['mur haut isolant']
+G[2]=G_cd['mur haut béton']/2
+G[3]=G_cd['mur haut béton']/2
+G[4]=G_cd['mur haut isolant']/2
+G[5]=G_cd['mur haut isolant']/2
 G[6]=G_conv['mur haut interieur']
 G[7]=G_conv['mur haut exterieur']
-G[8]=G_cd['mur haut béton']
-G[9]=G_cd['mur haut béton']
-G[10]=G_cd['mur haut isolant']
-G[11]=G_cd['mur haut isolant']
+G[8]=G_cd['mur haut béton']/2
+G[9]=G_cd['mur haut béton']/2
+G[10]=G_cd['mur haut isolant']/2
+G[11]=G_cd['mur haut isolant']/2
 G[12]=G_conv['mur haut interieur']
 G[13]=G_conv['mur intérieur vertical']
-G[14]=G_cd['mur intérieur vertical']
-G[15]=G_cd['mur intérieur vertical']
+G[14]=G_cd['mur intérieur vertical']/2
+G[15]=G_cd['mur intérieur vertical']/2
 G[16]=G_conv['mur intérieur vertical']
 G[17]=G_cd['vitre']
 G[18]=G_conv['mur intérieur vertical']
 G[19]=G_cd['vitre']
 G[20]=G_conv['mur intérieur horizontal']
 G[21]=G_conv['mur intérieur horizontal']
-G[22]=G_cd['mur intérieur horizontal']
-G[23]=G_cd['mur intérieur horizontal']
+G[22]=G_cd['mur intérieur horizontal']/2
+G[23]=G_cd['mur intérieur horizontal']/2
 G[24]=G_adv['Advection haut']
-G[25]=G_cd['mur intérieur horizontal']
-G[26]=G_cd['mur intérieur horizontal']
+G[25]=G_cd['mur intérieur horizontal']/2
+G[26]=G_cd['mur intérieur horizontal']/2
 G[27]=G_adv['Advection haut']
 G[28]=G_conv['mur intérieur horizontal']
 G[29]=G_conv['mur intérieur horizontal']
 G[30]=G_conv['mur bas intérieur']
-G[31]=G_cd['mur bas isolant']
-G[32]=G_cd['mur bas isolant']
-G[33]=G_cd['mur bas béton']
-G[34]=G_cd['mur bas béton']
+G[31]=G_cd['mur bas isolant']/2
+G[32]=G_cd['mur bas isolant']/2
+G[33]=G_cd['mur bas béton']/2
+G[34]=G_cd['mur bas béton']/2
 G[35]=G_conv['mur bas exterieur']
 G[36]=G_adv['Advection bas']
-G[37]=1 #Conv ext porte
-G[38]=1 #Conv int porte
+G[37]=50 #Conv ext porte
+G[38]=50 #Conv int porte
 G[39]=1 #Ventilation
 G[40]=G_conv['vitre exterieur']
 G[41]=G_conv['vitre interieur']
@@ -276,11 +276,14 @@ G[42]=G_conv['vitre interieur']
 
 b = np.zeros(A.shape[0])
 
-b[40]=T0
+b[0]=T0
 b[1]=T0
 b[7]=T0
+b[35]=T0
 b[37]=T0
 b[39]=T0
+b[40]=T0
+
 
 ### Vector of heat flow rate sources (for steady-state) ###
 
