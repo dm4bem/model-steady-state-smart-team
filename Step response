@@ -1,0 +1,5 @@
+bT = np.array([10, 10, 10, 20])     # vector of the nonzero elements of vector b : [To, To, To, To, To, To, Tisp] for the conductances 
+ []
+fQ = np.array([0, 0, 0, 0])         # [Φo, Φi, Qa, Φa]
+uss = np.hstack([bT, fQ])           # input vector for state space
+print(f'uss = {uss}')
