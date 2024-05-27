@@ -25,6 +25,7 @@ Smur2= S1+S2 -Svitre        # m² surface d'un des murs du haut
 Smur3= S1             # m² surface du mur intérieur horizontale
 Smur4= S2             # m² surface du mur intérieur verticale
 Sporte= Sporte * Lporte    # m² surface de la porte d'entrée
+eporte= 0,035         # m épaisseur de la porte d'entrée
 
 T0 = 10 #température extérieure
 Tin = 20 #température intérieure au début
@@ -207,6 +208,8 @@ G_conv={'vitre interieur':h[0]*Svitre,
         'mur haut exterieur':Smur2*h[0],
         'mur intérieur horizontal':Smur3*h[0],
         'mur intérieur vertical':Smur4*h[0],
+        'porte d'entrée intérieur' : Sporte * h[0],
+        'porte d'entrée exterieur' : Sporte * h[1],
 }
 pd.DataFrame.from_dict({'Conduction':G_conv})
 
@@ -270,8 +273,8 @@ G[33]=G_cd['mur bas béton']
 G[34]=G_cd['mur bas béton']
 G[35]=G_conv['mur bas exterieur']
 G[36]=G_conv['porte d'entrée']
-G[37]=1 #Conv ext porte
-G[38]=1 #Conv int porte
+G[37]=G_conv['porte d'entrée extérieur']
+G[38]=G_conv['porte d'entrée intérieur']
 G[39]=1 #Ventilation
 G[40]=G_conv['vitre exterieur']
 G[41]=G_conv['vitre interieur']
