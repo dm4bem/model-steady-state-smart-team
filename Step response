@@ -11,8 +11,6 @@ C[27]=C_thermal['mur bas isolant']
 
 # # State-space
 # temperature nodes
-theta = ['theta0', 'theta1', 'theta2', 'theta3', 'theta4', 'theta5', 'theta6', 'theta7','theta0', 'theta1', 'theta2', 'theta3', 'theta4', 'theta5', 'theta6', 'theta7']
-
 theta_list=[f"theta_{i}" for i in range(ntheta)]
 q_list=[f"q_{i}" for i in range(nbranches)]
 # flow-rate branches
