@@ -285,21 +285,21 @@ b[39]=T0
 
 f = np.zeros(A.shape[1])
 
-f[8]= Qout
-f[26]= Qin
-f[30]= Qout
-f[7]= Qin
 f[3]= Qout
+f[7]= Qin
+f[8]= Qout
 f[10]= Qout
 f[14]= Qin
 f[16]= Qout
-f[32]= Qout
-f[22]= Qin
-f[20]= Qin
-f[25]= Qin
-f[23]= Qin
 f[17]= Qin
 f[19]= Qin
+f[20]= Qin
+f[22]= Qin
+f[23]= Qin
+f[25]= Qin
+f[26]= Qin
+f[30]= Qout
+f[32]= Qout
 
 ### Calcul  steady-state###
 #theta = np.linalg.inv(A.T @ np.diag(G) @ A) @ (A.T @ np.diag(G) @ b + f)
