@@ -217,7 +217,37 @@ C_thermal = {'vitre':C_layer[2]*Svitre,
 
 
 G = np.zeros(A.shape[0])
-G[1]=G_cd['vitre']
+
+G[0]=G_conv['vitre exterieur']
+G[1]=G_conv['mur haut exterieur']
+G[2]=G_cd['mur haut béton']
+G[3]=G_cd['mur haut béton']
+G[4]=G_cd['mur haut isolant']
+G[5]=G_cd['mur haut isolant']
+G[6]=G_conv['mur haut interieur']
+G[7]=G_conv['mur haut exterieur']
+G[8]=G_cd['mur haut béton']
+G[9]=G_cd['mur haut béton']
+G[10]=G_cd['mur haut isolant']
+G[11]=G_cd['mur haut isolant']
+G[12]=G_conv['mur haut interieur']
+G[13]=G_conv['mur intérieur vertical']
+G[14]=G_cd['mur intérieur vertical']
+G[15]=G_cd['mur intérieur vertical']
+G[16]=G_conv['mur intérieur vertical']
+G[17]=G_cd['vitre']
+G[18]=G_conv['mur intérieur vertical']
+G[19]=G_cd['vitre']
+G[20]=G_conv['mur intérieur horizontal']
+G[21]=G_conv['mur intérieur horizontal']
+G[22]=G_cd['mur intérieur horizontal']
+G[23]=G_cd['mur intérieur horizontal']
+G[24]=G_adv['Advection haut']
+G[25]=G_cd['mur intérieur horizontal']
+G[26]=G_cd['mur intérieur horizontal']
+G[27]=G_adv['Advection haut']
+G[28]=G_conv['mur intérieur horizontal']
+G[29]=G_conv['mur intérieur horizontal']
 
 ### Vector of temperature sources ###
 
