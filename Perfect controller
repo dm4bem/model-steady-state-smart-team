@@ -5,6 +5,8 @@ import control as ctrl
 import time
 
 import dm4bem
+import GG
+import Step_responseV2
 
 controller = True
 Kp = 1e3    # W/°C, controller gain
@@ -34,5 +36,7 @@ if neglect_glass_capacity:
 # State-space
 [As, Bs, Cs, Ds, us] = dm4bem.tc2ss(TC)
 dm4bem.print_TC(TC)
+
+
 
 
