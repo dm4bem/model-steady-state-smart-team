@@ -21,11 +21,13 @@ Smur4= S2             # m² surface du mur intérieur verticale
 
 T0 = 20 #température extérieure
 Tin = 0 #température intérieure au début
+Ti_sp=10
 ntheta= 33  #nombre de points de température
 nbranches= 43 #nombre de branches
-Qout = 50 #heat flow rate outside#
-Qin = 50 #heat flow rate inside#
-
+Φo = 800 # W/m2 average solar irradiation on the exterior wall
+Φi = 100 # W/m2 surfacic power inside the building due to wall temperature
+Qa = 2*83 + 50 + 110 + 10 # W Human activity in the bulding that brings power to the building
+Φa = Φo
 
 air = {'Density': 1.2,                      # kg/m³
        'Specific heat': 1000}               # J/(kg·K)
@@ -72,6 +74,84 @@ wall_width_exterior=insulation['Width']+concrete['Width']
 pd.DataFrame([{'in': 8., 'out': 25}], index=['h'])  # W/(m²⋅K)
 G_layer = layer['Conductivity'] / layer['Width'] #conductance par m²
 pd.DataFrame(G_layer, columns=['Conductance'])
+
+
+
+G_cd={'vitre':G_layer.iloc[2]*Svitre,
+        'mur bas béton':Smur1*G_layer.iloc[0],
+        'mur bas isolant':Smur1*G_layer.iloc[1],
+        'mur haut isolant':Smur2*G_layer.iloc[1],
+        'mur haut béton':Smur2*G_layer.iloc[0],
+        'mur intérieur horizontal':Smur3*G_layer.iloc[0],
+        'mur intérieur vertical':Smur4*G_layer.iloc[0],
+        'porte':G_layer.iloc[3]*Sporte
+}
+
+pd.DataFrame.from_dict({'Conduction':G_cd})
+
+### Conductance matrix###
+
+G_layer = layer['Conductivity'] / layer['Width'] #conductance par m²
+pd.DataFrame(G_layer, columns=['Conductance'])
+G_cd={'vitre':G_layer.iloc[2]*Svitre,
+        'mur bas béton':Smur1*G_layer.iloc[0],
+        'mur bas isolant':Smur1*G_layer.iloc[1],
+        'mur haut isolant':Smur2*G_layer.iloc[1],
+        'mur haut béton':Smur2*G_layer.iloc[0],
+        'mur intérieur horizontal':Smur3*G_layer.iloc[0],
+        'mur intérieur vertical':Smur4*G_layer.iloc[0]
+}
+pd.DataFrame.from_dict({'Conduction':G_cd})
+
+
+G_conv={'vitre interieur':h[0]*Svitre,
+        'vitre exterieur':h[1]*Svitre,
+        'mur bas intérieur':Smur1*h[0],
+        'mur bas exterieur':Smur1*h[1],
+        'mur haut interieur':Smur2*h[0],
+        'mur haut exterieur':Smur2*h[1],
+        'mur intérieur horizontal':Smur3*h[0],
+        'mur intérieur vertical':Smur4*h[0],
+        'porte intérieur' : Sporte * h[0],
+        'porte exterieur' : Sporte * h[1],
+}
+pd.DataFrame.from_dict({'Conduction':G_conv})
+
+C_layer = layer['Density'] * layer['Specific heat']  * layer['Width']
+pd.DataFrame(C_layer, columns=['Capacity'])
+
+
+C_layer = layer['Density'] * layer['Specific heat']  * layer['Width']
+pd.DataFrame(C_layer, columns=['Capacity'])
+C_thermal = {'vitre':C_layer.iloc[2]*Svitre,
+        'mur bas béton':Smur1*C_layer.iloc[0],
+        'mur bas isolant':Smur1*C_layer.iloc[1],
+        'mur haut isolant':Smur2*C_layer.iloc[1],
+        'mur haut béton':Smur2*C_layer.iloc[0],
+        'mur intérieur horizontal':Smur3*C_layer.iloc[0],
+        'mur intérieur vertical':Smur4*C_layer.iloc[0],
+}
+pd.DataFrame.from_dict({'Thermal capacity':C_thermal})
+
+Va1 = (L1-wall_width_exterior)*(L2-wall_width_exterior)*H    # m³, volume d'air de la pièce du haut
+Va2 = (2*L1-wall_width_exterior)*(L2-wall_width_exterior)*H           # m³, volume d'air de la pièce du haut
+ACH1 = 1        # 1/h, changement d'air pièce du bas
+ACH2 = 0.5      # 1/h, changement d'air pièce du haut
+G_adv = {   'Advection bas': air['Density']*air['Specific heat']*ACH1*Va1/3600,
+            'Advection haut': air['Density']*air['Specific heat']*ACH2*Va2/3600,
+            'Advection entre haut':10
+}
+pd.DataFrame.from_dict({'Conduction':G_adv})
+
+
+# temperature nodes
+θ = ['θ0', 'θ1', 'θ2', 'θ3', 'θ4', 'θ5', 'θ6', 'θ7','θ8', 'θ9', 'θ10', 'θ11', 'θ12', 'θ13', 'θ14', 'θ15','θ16', 'θ17', 'θ18'
+     ,'θ19', 'θ20', 'θ21', 'θ22', 'θ23', 'θ24', 'θ25', 'θ26','θ27', 'θ28', 'θ29', 'θ30', 'θ31', 'θ32']
+
+# flow-rate branches
+q = ['q0', 'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11','q12', 'q13', 'q14', 'q15', 'q16', 'q17', 'q18',
+      'q19', 'q20', 'q21', 'q22', 'q23','q24', 'q25', 'q26', 'q27', 'q28', 'q29', 'q30', 'q31', 'q32', 'q33', 'q34', 'q35','q36',
+       'q37','q38', 'q39','q40' ,'q41', 'q42']
 
 
 ### Incidence matrix###
@@ -190,73 +270,6 @@ A[36,31] = 1
 A[36,32] = -1
 A[37,32] = 1
 
-
-G_cd={'vitre':G_layer[2]*Svitre,
-        'mur bas béton':Smur1*G_layer[0],
-        'mur bas isolant':Smur1*G_layer[1],
-        'mur haut isolant':Smur2*G_layer[1],
-        'mur haut béton':Smur2*G_layer[0],
-        'mur intérieur horizontal':Smur3*G_layer[0],
-        'mur intérieur vertical':Smur4*G_layer[0],
-        'porte':G_layer[3]*Sporte
-}
-
-pd.DataFrame.from_dict({'Conduction':G_cd})
-
-### Conductance matrix###
-
-G_layer = layer['Conductivity'] / layer['Width'] #conductance par m²
-pd.DataFrame(G_layer, columns=['Conductance'])
-G_cd={'vitre':G_layer[2]*Svitre,
-        'mur bas béton':Smur1*G_layer[0],
-        'mur bas isolant':Smur1*G_layer[1],
-        'mur haut isolant':Smur2*G_layer[1],
-        'mur haut béton':Smur2*G_layer[0],
-        'mur intérieur horizontal':Smur3*G_layer[0],
-        'mur intérieur vertical':Smur4*G_layer[0]
-}
-pd.DataFrame.from_dict({'Conduction':G_cd})
-
-
-G_conv={'vitre interieur':h[0]*Svitre,
-        'vitre exterieur':h[1]*Svitre,
-        'mur bas intérieur':Smur1*h[0],
-        'mur bas exterieur':Smur1*h[1],
-        'mur haut interieur':Smur2*h[0],
-        'mur haut exterieur':Smur2*h[1],
-        'mur intérieur horizontal':Smur3*h[0],
-        'mur intérieur vertical':Smur4*h[0],
-        'porte intérieur' : Sporte * h[0],
-        'porte exterieur' : Sporte * h[1],
-}
-pd.DataFrame.from_dict({'Conduction':G_conv})
-
-C_layer = layer['Density'] * layer['Specific heat']  * layer['Width']
-pd.DataFrame(C_layer, columns=['Capacity'])
-
-
-C_layer = layer['Density'] * layer['Specific heat']  * layer['Width']
-pd.DataFrame(C_layer, columns=['Capacity'])
-C_thermal = {'vitre':C_layer[2]*Svitre,
-        'mur bas béton':Smur1*C_layer[0],
-        'mur bas isolant':Smur1*C_layer[1],
-        'mur haut isolant':Smur2*C_layer[1],
-        'mur haut béton':Smur2*C_layer[0],
-        'mur intérieur horizontal':Smur3*C_layer[0],
-        'mur intérieur vertical':Smur4*C_layer[0],
-}
-pd.DataFrame.from_dict({'Thermal capacity':C_thermal})
-
-Va1 = (L1-wall_width_exterior)*(L2-wall_width_exterior)*H    # m³, volume d'air de la pièce du haut
-Va2 = (2*L1-wall_width_exterior)*(L2-wall_width_exterior)*H           # m³, volume d'air de la pièce du haut
-ACH1 = 1        # 1/h, changement d'air pièce du bas
-ACH2 = 0.5      # 1/h, changement d'air pièce du haut
-G_adv = {   'Advection bas': air['Density']*air['Specific heat']*ACH1*Va1/3600,
-            'Advection haut': air['Density']*air['Specific heat']*ACH2*Va2/3600,
-            'Advection entre haut':10
-}
-pd.DataFrame.from_dict({'Conduction':G_adv})
-
 G = np.zeros(A.shape[0])
 
 G[0]=G_conv['vitre exterieur']
@@ -305,36 +318,14 @@ G[42]=G_conv['vitre interieur']
 
 ### Vector of temperature sources ###
 
-b = np.zeros(A.shape[0])
-
-b[0]=T0
-b[1]=T0
-b[7]=T0
-b[35]=T0
-b[37]=T0
-b[39]=T0
-b[40]=T0
 
 
-### Vector of heat flow rate sources (for steady-state) ###
 
-f = np.zeros(A.shape[1])
+b = pd.Series(['T0','T0',0,0,0,0,0,'T0',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'T0',0,'T0',0,'Ti_sp','T0',0,0 ],
+              index=q)
 
-f[8]= Qout
-f[26]= Qin
-f[30]= Qout
-f[7]= Qin
-f[3]= Qout
-f[10]= Qout
-f[14]= Qin
-f[16]= Qout
-f[32]= Qout
-f[22]= Qin
-f[20]= Qin
-f[25]= Qin
-f[23]= Qin
-f[17]= Qin
-f[19]= Qin
+f = pd.Series([0, 0, 0, 'Φo', 0, 0,0,'Φi','Φo',0,'Φo',0,0,0,'Φi',0,'Φo','Φi',0,'Φi','Φi',0,'Φi','Φi',0,'Φi','Φi',0,0,0,'Φo',0,'Φo'],
+              index=θ)
 
 C = np.zeros(A.shape[1])
 C[4]=C_thermal['mur haut béton']
@@ -347,6 +338,6 @@ C[21]=C_thermal['mur intérieur horizontal']
 C[29]=C_thermal['mur bas béton']
 C[27]=C_thermal['mur bas isolant']
 
-# c'est quoi y ?
+# node of interest
 y = np.zeros(A.shape[1])
 y[0:2] = 1
