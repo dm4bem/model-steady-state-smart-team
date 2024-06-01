@@ -335,3 +335,18 @@ f[25]= Qin
 f[23]= Qin
 f[17]= Qin
 f[19]= Qin
+
+C = np.zeros(A.shape[1])
+C[4]=C_thermal['mur haut béton']
+C[6]=C_thermal['mur haut isolant']
+C[11]=C_thermal['mur haut béton']
+C[13]=C_thermal['mur haut isolant']
+C[18]=C_thermal['mur intérieur vertical']
+C[24]=C_thermal['mur intérieur horizontal']
+C[21]=C_thermal['mur intérieur horizontal']
+C[29]=C_thermal['mur bas béton']
+C[27]=C_thermal['mur bas isolant']
+
+# c'est quoi y ?
+y = np.zeros(A.shape[1])
+y[0:2] = 1
