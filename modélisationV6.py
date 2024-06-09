@@ -341,3 +341,5 @@ C[27]=C_thermal['mur bas isolant']
 # node of interest
 y = np.zeros(A.shape[1])
 y[0:2] = 1
+
+bss=pd.Series([T0,T0,0,0,0,0,0,T0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,T0,0,T0,0,Ti_sp,T0,0,0 ])
