@@ -13,8 +13,8 @@ import dm4bem
 
 
 ### Calcul  steady-state###
-theta = np.linalg.inv(A.T @ np.diag(G) @ A) @ (A.T @ np.diag(G) @ b + f)
-q = np.diag(G) @ (-A @ theta + b)
+theta = np.linalg.inv(A.T @ np.diag(G) @ A) @ (A.T @ np.diag(G) @ bss + fss)
+q = np.diag(G) @ (-A @ theta + bss)
 print('pièce 0 : ', theta[0], ', pièce 1 : ',theta[1],', pièce 2 : ', theta[2])
 
 y = np.zeros(A.shape[1])
