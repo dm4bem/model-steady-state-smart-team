@@ -7,7 +7,7 @@ Created on Tue May 21 15:25:48 2024
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from modélisationV5 import *
+from modélisationV6 import *
 import dm4bem
 
 
