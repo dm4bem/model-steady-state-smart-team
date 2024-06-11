@@ -27,30 +27,7 @@ weather_data = data[["temp_air", "dir_n_rad", "dif_h_rad"]]
 weather_data.index = weather_data.index.map(
     lambda t: t.replace(year=2020))
 
-# Define start and end dates
-start_date = '2020-01-28 08:00'
-end_date = '2020-02-15 18:00'
-
-# Filter the data based on the start and end dates
-weather_data = weather_data.loc[start_date:end_date]
-del data
-weather_data
-""" 
-#Plot outdoor air temperature
-weather_data['temp_air'].plot()
-plt.xlabel("Time")
-plt.ylabel("Dry-bulb air temperature, θ / °C")
-plt.legend([])
-plt.show()
-
-#Plot solar radiation: normal direct and horizontal diffuse
-weather_data[['dir_n_rad', 'dif_h_rad']].plot()
-plt.xlabel("Time")
-plt.ylabel("Solar radiation, Φ / (W·m⁻²)")
-plt.legend(['$Φ_{direct}$', '$Φ_{diffuse}$'])
-plt.show()
- """
-#%% Calculation of solar radiation on a tilted
+#%% Calculation of solar radiation on a tilted surface
 
 # Parameters
 # =============================================================================
@@ -59,19 +36,12 @@ plt.show()
 # ϕ latitude between -90 and 90 (northward >0 / Southward <0)
 # =============================================================================
 
-albedo=0.2 #?!
+albedo=0.2
 #Walls
 WallN={'slope': 90, 'azimuth': 180, 'latitude': 45}
 WallE={'slope': 90, 'azimuth': -90, 'latitude': 45}
 WallW={'slope': 90, 'azimuth': 90, 'latitude': 45}
 WallS={'slope': 90, 'azimuth': 0, 'latitude': 45}
-
-surface_orientation=WallN
-
-#Definition of the 3 angles
-β = surface_orientation['slope']
-γ = surface_orientation['azimuth']
-ϕ = surface_orientation['latitude']
 
 # Transform degrees in radians
 β = β * np.pi / 180
@@ -108,13 +78,4 @@ gamma[gamma < 1e-5] = 1e-5
 dir_h_rad = weather_data["dir_n_rad"] * np.sin(gamma)
 
 ref_rad = (dir_h_rad + weather_data["dif_h_rad"]) * albedo * (1 - np.cos(β) / 2)
-
-""" #Plot
-fig, ax = plt.subplots()
-ax.plot(weather_data.index,dir_rad,"g")
-ax.plot(weather_data.index,dif_rad,"y")
-ax.plot(weather_data.index,ref_rad,"b")
-plt.xlabel('Time')
-plt.legend()
-plt.show() """
 #%%
