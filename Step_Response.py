@@ -1,3 +1,9 @@
+import numpy as np
+import dm4bem
+import pandas as pd
+import matplotlib as plt
+from modélisationV6 import*
+
 # State-space matrices creation
 Adf = pd.DataFrame(A, index=q, columns=θ)
 Cdf= pd.Series(C, index=θ)
