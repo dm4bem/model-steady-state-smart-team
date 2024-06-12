@@ -43,6 +43,10 @@ WallE={'slope': 90, 'azimuth': -90, 'latitude': 45}
 WallW={'slope': 90, 'azimuth': 90, 'latitude': 45}
 WallS={'slope': 90, 'azimuth': 0, 'latitude': 45}
 
+β = surface_orientation['slope']
+γ = surface_orientation['azimuth']
+ϕ = surface_orientation['latitude']
+
 # Transform degrees in radians
 β = β * np.pi / 180
 γ = γ * np.pi / 180
