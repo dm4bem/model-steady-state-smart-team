@@ -7,7 +7,7 @@ from dm4bem import read_epw, sol_rad_tilt_surf
 #%% Read weather data
 
 # Modify the following path before running according to where the file has been downloaded.
-filename = 'weather_data\FRA_AR_Grenoble.Alpes.Isere.AP.074860_TMYx.2007-2021.epw' 
+filename = 'FRA_AR_Grenoble.Alpes.Isere.AP.074860_TMYx.2007-2021.epw' 
 [data, meta] = read_epw(filename, coerce_year=None)
 #data  #print the table with all the entries
 
