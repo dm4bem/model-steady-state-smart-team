@@ -43,9 +43,10 @@ WallE={'slope': 90, 'azimuth': -90, 'latitude': 45}
 WallW={'slope': 90, 'azimuth': 90, 'latitude': 45}
 WallS={'slope': 90, 'azimuth': 0, 'latitude': 45}
 
-β = surface_orientation['slope']
-γ = surface_orientation['azimuth']
-ϕ = surface_orientation['latitude']
+
+β = 90 # 90° is vertical; > 90° downward
+γ = 0 # 0° South, positive westward
+ϕ = 45 # °, North Pole 90° positive
 
 # Transform degrees in radians
 β = β * np.pi / 180
