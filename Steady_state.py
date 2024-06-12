@@ -10,8 +10,6 @@ import matplotlib.pyplot as plt
 from modélisationV6 import *
 import dm4bem
 
-
-
 ### Calcul  steady-state###
 theta = np.linalg.inv(A.T @ np.diag(G) @ A) @ (A.T @ np.diag(G) @ bss + fss)
 q = np.diag(G) @ (-A @ theta + bss)
